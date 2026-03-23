@@ -1,29 +1,29 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
+        stage('Hello') {
             steps {
-                checkout scm
+                echo 'Hello from Jenkins!'
+                sh 'echo "Running on: $(hostname)"'
+                sh 'date'
             }
         }
-
-        stage('Build') {
+        stage('Show System Info') {
             steps {
-                echo 'Building...'
+                sh 'whoami'
+                sh 'pwd'
+                sh 'ls -la'
             }
         }
-
-        stage('Test') {
+        stage('Done') {
             steps {
-                echo 'Testing...'
+                echo 'Pipeline completed successfully!'
             }
         }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying...'
-            }
+    }
+    post {
+        always {
+            echo "Build result: ${currentBuild.result ?: 'SUCCESS'}"
         }
     }
 }
